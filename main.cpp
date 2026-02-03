@@ -1,14 +1,15 @@
-#include <Effects/DistortionEngine.hpp>
+#include <ControlEngine.hpp>
 #include <iostream>
 
 int main() {
-  GuitarDistortionEngine engine;
+  ControlEngine engine;
 
-  engine.setDrive(10.0f);
-  engine.setThreshold(0.8f);
-  engine.setOutputGain(0.7f);
+  engine.LiveStatus=false;
 
-  if (!engine.start()) {
+  engine.DistortionValue={10.0,0.9,0.5};
+  engine.setParamDistortion(engine.DistortionValue);
+
+  if (!engine.startDistortionEngine()) {
     std::cerr << "Failed to start the engine";
     return 1;
   }
@@ -16,6 +17,6 @@ int main() {
   std::cout << "Engine Running. Press Enter to stop";
   std::cin.get();
 
-  engine.stop();
+  engine.stopDistortionEngine();
   return 0;
 }
