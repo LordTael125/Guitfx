@@ -1,0 +1,20 @@
+Basic project plan
+
+-> Simple plug and play interface for any instrument using pastream;
+
+-> Ability to choose active listening device and output speaker;
+
+-> Provide live monitoring with minimal latency;
+
+->  Provide effects such as
+    -> Distortion;
+    -> Reverb;
+    -> Delay;
+    -> Noise Gate;
+    -> Overdrive;
+
+-> Have the ability to record a session;
+
+-> Save the recordings to the disk;
+
+-> Create presets and give ability to load and store presets;

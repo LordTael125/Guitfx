@@ -1,11 +1,11 @@
 #pragma once
 #include <portaudio.h>
 
-class GuitarDistortionEngine {
+class DistortionEngine {
 
     public :
-        GuitarDistortionEngine();
-        ~GuitarDistortionEngine();
+        DistortionEngine();
+        ~DistortionEngine();
 
         bool start();
         void stop();

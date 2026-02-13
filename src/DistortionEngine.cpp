@@ -4,7 +4,7 @@
 #include <cmath>
 
 
-GuitarDistortionEngine::GuitarDistortionEngine()
+DistortionEngine::DistortionEngine()
     :   stream_(nullptr),
         drive_(10.0f),
         threshold_(0.6f),
@@ -18,12 +18,12 @@ GuitarDistortionEngine::GuitarDistortionEngine()
     }
 
 
-GuitarDistortionEngine::~GuitarDistortionEngine() {
+DistortionEngine::~DistortionEngine() {
     stop();
     Pa_Terminate();
 }
 
-bool GuitarDistortionEngine::start() {
+bool DistortionEngine::start() {
     if (running_) return true;
 
     PaDeviceIndex inDev  = Pa_GetDefaultInputDevice();
@@ -70,7 +70,7 @@ bool GuitarDistortionEngine::start() {
         44100,
         256,
         paClipOff,
-        &GuitarDistortionEngine::audioCallBack,
+        &DistortionEngine::audioCallBack,
         this
     );
 
@@ -93,7 +93,7 @@ bool GuitarDistortionEngine::start() {
 
 }
 
-void GuitarDistortionEngine::stop() {
+void DistortionEngine::stop() {
     if (!running_) return;
     if (stream_){
         Pa_StopStream(stream_);
@@ -105,7 +105,7 @@ void GuitarDistortionEngine::stop() {
 
 
 
-int GuitarDistortionEngine::audioCallBack(
+int DistortionEngine::audioCallBack(
     const void* inputBuffer,
     void* outputBuffer,
     unsigned long framesPerBuffer,
@@ -113,13 +113,13 @@ int GuitarDistortionEngine::audioCallBack(
     PaStreamCallbackFlags statusFlag,
     void* userdata)
 {
-    auto* engine = static_cast<GuitarDistortionEngine*>(userdata);
+    auto* engine = static_cast<DistortionEngine*>(userdata);
     const float* in =  static_cast<const float*>(inputBuffer);
     float* out = static_cast<float*>(outputBuffer);
     return engine -> process(in, out, framesPerBuffer);
 }
 
-void GuitarDistortionEngine::applyDistortionToBuffer(
+void DistortionEngine::applyDistortionToBuffer(
     const float* input,
     float* output,
     std::size_t numSamples,
@@ -128,7 +128,7 @@ void GuitarDistortionEngine::applyDistortionToBuffer(
         
     };
 
-int GuitarDistortionEngine::process(
+int DistortionEngine::process(
     const float* in, float* out, unsigned long framesPerBuffer)
 {
     if (!out) return paAbort;
