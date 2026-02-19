@@ -1,13 +1,48 @@
 #pragma once
-// #include <portaudio.h>
+#include <portaudio.h>
 
 
-class ControlEngine {
+class audioEngine {
+
+    public :
+        audioEngine();
+        ~audioEngine();
+        PaStream* stream_;
+        bool start_stream();
+        void stop_stream();
+        
+        struct audioBuffer{
+            const float* in;
+            float* out;
+            unsigned long framesperbuffer;
+        } typedef audioBuffer;
+
+        virtual int applyEffects(const float* in, float* out, unsigned long framesperbuffer)=0;
+        
+
+    
+    private :
+        static int audioCallBack(
+            const void* inputBuffer,
+            void* outputBuffer,
+            unsigned long framesPerBuffer,
+            const PaStreamCallbackTimeInfo* timeInfo,
+            PaStreamCallbackFlags statusFlag,
+            void* userdata);
+
+        bool pa_stream_status=false;
+
+    protected :
+        audioBuffer audioData;
+        
+};
+
+class ControlEngine : public audioEngine{
 
     public :
         ControlEngine();
         ~ControlEngine();
-        enum ReverbMode {Hall=0,Room=1,Chamber=2,Spring=3,Plate=4,Default=5};
+        enum ReverbMode {Hall,Room,Chamber,Spring,Plate,Default};
 
         bool LiveStatus;
 
@@ -26,18 +61,32 @@ class ControlEngine {
             float OutputLevel;
             float Tone;
             float Time;
-            ReverbMode Mode = Hall;
+            ReverbMode Mode = Default;
         }typedef ReverbParam;
+
+        
+
+        
+
+        bool startEngine();
+        void stopEngine();
+        
+        
 
         DistortionParam DistortionValue;
         void setDistortionParam(DistortionParam);
-        bool startDistortionEngine();
-        void stopDistortionEngine();   
+  
 
         ReverbParam ReverbValue;
         void setReverbParam(ReverbParam);
-        bool startReverbEngine();
-        void stopReverbEngine();
+
+        int applyEffects(const float* in, float* out, unsigned long framesperbuffer);
+
+        
+
+
+    
 
 
 };
+

@@ -1,13 +1,13 @@
 #pragma once
 #include <portaudio.h>
 
-enum ReverbMode {Hall=0,Room=1,Chamber=2,Spring=3,Plate=4,Default=5};
+enum ReverbMode {Hall,Room,Chamber,Spring,Plate,Default};
 
 struct ReverbParam{
     float OutputLevel;
     float Tone;
     float Time;
-    ReverbMode Mode = Hall;
+    ReverbMode Mode = Default;
 }typedef ReverbParam;
 
 class ReverbEngine {
@@ -22,7 +22,9 @@ class ReverbEngine {
         bool StartChamberReverb(ReverbParam Param);
         bool StartSpringReverb(ReverbParam Param);
         bool StartPlateReverb(ReverbParam Param);
-        bool Stop();
+
+        bool Start();
+        void Stop();
 
 
 };
