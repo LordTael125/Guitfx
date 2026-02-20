@@ -18,3 +18,25 @@ Basic project plan
 -> Save the recordings to the disk;
 
 -> Create presets and give ability to load and store presets;
+
+Implementation 1.0 : Audio Control 
+    -> Audio Control using PortAudio                                                                    <Implemented>
+    -> Project the monitor feature                                                                      <Implemented>
+    -> Elevate the audio control to different class and control using inheritance (Later)               <Implemented>
+
+Implementation 2.0 : Distortion effect 
+    -> Apply low tanh distortion on the audio                                                           <Implemented>
+
+
+
+Implementation 3.0 : Apply Delay
+    -> Apply simple echo feedback
+    -> Introduce feedback delays
+    -> May? try ping-pong delay
+
+    Advanced
+    -> create Chorus/Flanger effect
+
+
+
+Implementation 4.0 : Apply Reverb

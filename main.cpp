@@ -1,4 +1,5 @@
 #include <ControlEngine.hpp>
+#include <DataType.hpp>
 #include <iostream>
 
 int main(int argc, char* argv[]) {
@@ -6,8 +7,11 @@ int main(int argc, char* argv[]) {
 
   engine.LiveStatus=false;
 
-  engine.DistortionValue={8.0,1.0,1.0};
-  engine.Distortion=true;
+  engine.Distortion = true;
+  engine.DistortionValue = {10.0,0.5,0.5};
+
+  // engine.Delay=true;
+  // engine.setDelayMode(Delay::echoDelay);
   
 
   if (!engine.startEngine()) {

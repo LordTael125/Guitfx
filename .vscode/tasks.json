@@ -11,7 +11,7 @@
                 "src/ControlEngine.cpp",
                 "src/ReverbEngine.cpp",
                 "-o",
-                "${workspaceFolder}/Builds/Guitfx",
+                "${workspaceFolder}/build/Guitfx",
                 "-I${workspaceFolder}/include",
                 "-I${workspaceFolder}/include/Effects",
                 "-lportaudio"

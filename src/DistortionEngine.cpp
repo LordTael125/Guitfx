@@ -20,14 +20,14 @@ DistortionEngine::~DistortionEngine() {
 int DistortionEngine::start(const float* in, float* out, unsigned long framesperbuffer)
 {
     running_=true;
-    return this -> process_distort(in, out,framesperbuffer);
+    return this -> simple_tanhDistort(in, out,framesperbuffer);
 }
 
 void DistortionEngine::stop() {
     running_=false;
 }
 
-int DistortionEngine::process_distort(
+int DistortionEngine::simple_tanhDistort(
     const float* in, float* out, unsigned long framesPerBuffer)
 {
     if (!out) return paAbort;
@@ -46,3 +46,15 @@ int DistortionEngine::process_distort(
     }
     return paContinue;
 }
+
+
+int DistortionEngine::double_filterDistort(const float* in, float* out, unsigned long framesPerBuffer){
+    if (!out) return paAbort;
+
+    if(!in){
+        std::fill(out,out+framesPerBuffer,0.0f);
+        return paContinue;
+    }
+
+    return paContinue;
+};

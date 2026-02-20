@@ -7,56 +7,8 @@
 #include <Effects/DistortionEngine.hpp>
 #include <Effects/ReverbEngine.hpp>
 
-DistortionEngine DistEngine;
 
 
-
-
-ControlEngine::ControlEngine(){
-
-}
-
-ControlEngine::~ControlEngine(){
-    stop_stream();
-}
-
-
-bool ControlEngine::startEngine(){
-    bool status = start_stream();
-    if (!status){
-        std::cout << "Failed to start audio stream";
-        return false;
-    }
-    return true;
-    
-}
-void ControlEngine::stopEngine(){
-    stop_stream();
-};
-
-
-int ControlEngine::applyEffects(const float* in, float* out, unsigned long framesperbuffer){
-
-    if(Distortion){
-        setDistortionParam(DistortionValue);
-        DistEngine.start(in,out,framesperbuffer);
-    }
-    return 0;
-}
-
-
-void ControlEngine::setDistortionParam(DistortionParam Param){
-
-
-    DistEngine.setDrive(Param.Drive);
-    DistEngine.setThreshold(Param.Threshold);
-    DistEngine.setOutputGain(Param.OutputGain);
-}
-
-// Construct Reverb Engine
-ReverbEngine RevEngine;
-void ControlEngine::setReverbParam(ReverbParam Param){
-}
 
 
 // 
@@ -157,8 +109,6 @@ void audioEngine::stop_stream(){
     }
 }
 
-
-
 int audioEngine::audioCallBack(
     const void* inputBuffer,
     void* outputBuffer,
@@ -172,4 +122,55 @@ int audioEngine::audioCallBack(
     float* out = static_cast<float*>(outputBuffer);
 
     return engine -> applyEffects(in,out,framesPerBuffer);
+}
+
+
+ControlEngine::ControlEngine(){
+
+}
+ControlEngine::~ControlEngine(){
+    stop_stream();
+}
+
+
+bool ControlEngine::startEngine(){
+    bool status = start_stream();
+    if (!status){
+        std::cout << "Failed to start audio stream";
+        return false;
+    }
+    return true;
+}
+void ControlEngine::stopEngine(){
+    stop_stream();
+};
+
+
+int ControlEngine::applyEffects(const float* in, float* out, unsigned long framesperbuffer){
+
+    if(Distortion){
+        setDistortionParam(DistortionValue);
+        DistEngine.start(in,out,framesperbuffer);
+    }
+
+    if(Delay){
+
+    }
+    return 0;
+}
+
+
+void ControlEngine::setDistortionParam(Distortion::DistortionParam Param){
+    DistEngine.setDrive(Param.Drive);
+    DistEngine.setThreshold(Param.Threshold);
+    DistEngine.setOutputGain(Param.OutputGain);
+}
+
+// Construct Reverb Engine
+ReverbEngine RevEngine;
+void ControlEngine::setReverbParam(Reverb::ReverbParam Param){
+}
+
+void ControlEngine::setDelayMode(Delay::mode mode){
+
 }

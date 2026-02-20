@@ -1,6 +1,7 @@
 #pragma once
 #include <portaudio.h>
-
+#include <Effects/DelayEngine.hpp>
+#include <Effects/DistortionEngine.hpp>
 
 class audioEngine {
 
@@ -42,7 +43,8 @@ class ControlEngine : public audioEngine{
     public :
         ControlEngine();
         ~ControlEngine();
-        enum ReverbMode {Hall,Room,Chamber,Spring,Plate,Default};
+
+        
 
         bool LiveStatus;
 
@@ -51,34 +53,23 @@ class ControlEngine : public audioEngine{
         bool Delay=false;
         bool Chorus=false;
 
-        struct DistortionParam{
-            float Drive;
-            float Threshold;
-            float OutputGain;
-        }typedef DistortionParam;
 
-        struct ReverbParam{
-            float OutputLevel;
-            float Tone;
-            float Time;
-            ReverbMode Mode = Default;
-        }typedef ReverbParam;
-
-        
-
-        
 
         bool startEngine();
         void stopEngine();
         
         
-
-        DistortionParam DistortionValue;
-        void setDistortionParam(DistortionParam);
+        DistortionEngine DistEngine;
+        Distortion::DistortionParam DistortionValue;
+        void setDistortionParam(Distortion::DistortionParam);
   
 
-        ReverbParam ReverbValue;
-        void setReverbParam(ReverbParam);
+        Reverb::ReverbParam ReverbValue;
+        void setReverbParam(Reverb::ReverbParam);
+
+        DelayEngine DelayEng;
+        
+        void setDelayMode(Delay::mode);
 
         int applyEffects(const float* in, float* out, unsigned long framesperbuffer);
 

@@ -19,7 +19,9 @@ class DistortionEngine {
     private :
 
 
-        int process_distort(const float* in, float* out, unsigned long framesPerBuffer);
+        int simple_tanhDistort(const float* in, float* out, unsigned long framesPerBuffer);
+
+        int double_filterDistort(const float* in, float* out, unsigned long framesPerBuffer);
         
 
         PaStream* stream_;
