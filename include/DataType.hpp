@@ -1,15 +1,21 @@
 #pragma once
 
+
 namespace Delay {
-    enum mode {
-        echoDelay,
-        feedbackDelay,
-        ping_pongDelay
-    };
+    enum DelayMode {echoDelay, feedbackDelay, ping_pongDelay};
+    struct DelayParam 
+    {
+        float Level;
+        float Feedback;
+        float Time;
+        DelayMode Mode;
+    } typedef DelayParam;
+
 }
 
 namespace Distortion {
-        struct DistortionParam{
+        struct DistortionParam 
+        {
             float Drive;
             float Threshold;
             float OutputGain;
@@ -18,10 +24,28 @@ namespace Distortion {
 
 namespace Reverb {
     enum ReverbMode {Hall,Room,Chamber,Spring,Plate,Default};
-    struct ReverbParam{
-            float OutputLevel;
-            float Tone;
-            float Time;
-            ReverbMode Mode = Default;
+    struct ReverbParam 
+    {
+        float OutputLevel;
+        float Tone;
+        float Time;
+        ReverbMode Mode = Default;
     }typedef ReverbParam;
+}
+
+namespace Audio {
+    struct audioBuffer 
+    {
+        const float* in;
+        float* out;
+        unsigned long framesPerBuffer;
+    }typedef audioBuffer;
+
+}
+
+namespace Gate {
+    struct GateParam {
+        float Threshold;
+        float Decay;
+    };
 }

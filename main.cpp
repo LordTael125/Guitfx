@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
   engine.LiveStatus=false;
 
   engine.Distortion = true;
-  engine.DistortionValue = {10.0,0.5,0.5};
+  engine.DistortionValue = {5.0,0.1,1.0};
 
   // engine.Delay=true;
   // engine.setDelayMode(Delay::echoDelay);

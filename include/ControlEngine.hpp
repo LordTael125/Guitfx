@@ -18,7 +18,7 @@ class audioEngine {
             unsigned long framesperbuffer;
         } typedef audioBuffer;
 
-        virtual int applyEffects(const float* in, float* out, unsigned long framesperbuffer)=0;
+        virtual int applyEffects(Audio::audioBuffer)=0;
         
 
     
@@ -61,17 +61,17 @@ class ControlEngine : public audioEngine{
         
         DistortionEngine DistEngine;
         Distortion::DistortionParam DistortionValue;
-        void setDistortionParam(Distortion::DistortionParam);
+        void setDistortionParam();
   
 
         Reverb::ReverbParam ReverbValue;
-        void setReverbParam(Reverb::ReverbParam);
+        void setReverbParam();
 
         DelayEngine DelayEng;
         
-        void setDelayMode(Delay::mode);
+        void setDelayMode(Delay::DelayMode);
 
-        int applyEffects(const float* in, float* out, unsigned long framesperbuffer);
+        int applyEffects(Audio::audioBuffer);
 
         
 

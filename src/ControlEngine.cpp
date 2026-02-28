@@ -117,11 +117,15 @@ int audioEngine::audioCallBack(
     PaStreamCallbackFlags statusFlag,
     void* userdata)
 {
-    auto* engine = static_cast<audioEngine*>(userdata);
-    const float* in =  static_cast<const float*>(inputBuffer);
-    float* out = static_cast<float*>(outputBuffer);
 
-    return engine -> applyEffects(in,out,framesPerBuffer);
+    Audio::audioBuffer streamBuffer;
+    streamBuffer.framesPerBuffer = framesPerBuffer;
+
+    auto* engine = static_cast<audioEngine*>(userdata);
+    streamBuffer.in =  static_cast<const float*>(inputBuffer);
+    streamBuffer.out = static_cast<float*>(outputBuffer);
+
+    return engine -> applyEffects(streamBuffer);
 }
 
 
@@ -146,11 +150,11 @@ void ControlEngine::stopEngine(){
 };
 
 
-int ControlEngine::applyEffects(const float* in, float* out, unsigned long framesperbuffer){
+int ControlEngine::applyEffects(Audio::audioBuffer streamBuffer){
 
     if(Distortion){
-        setDistortionParam(DistortionValue);
-        DistEngine.start(in,out,framesperbuffer);
+        setDistortionParam();
+        DistEngine.start(streamBuffer);
     }
 
     if(Delay){
@@ -160,17 +164,15 @@ int ControlEngine::applyEffects(const float* in, float* out, unsigned long frame
 }
 
 
-void ControlEngine::setDistortionParam(Distortion::DistortionParam Param){
-    DistEngine.setDrive(Param.Drive);
-    DistEngine.setThreshold(Param.Threshold);
-    DistEngine.setOutputGain(Param.OutputGain);
+void ControlEngine::setDistortionParam(){
+    DistEngine.updateParam(DistortionValue);
 }
 
 // Construct Reverb Engine
 ReverbEngine RevEngine;
-void ControlEngine::setReverbParam(Reverb::ReverbParam Param){
+void ControlEngine::setReverbParam(){
 }
 
-void ControlEngine::setDelayMode(Delay::mode mode){
+void ControlEngine::setDelayMode(Delay::DelayMode mode){
 
 }
